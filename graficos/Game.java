@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -20,19 +19,8 @@ public class Game extends Canvas implements Runnable{
     private final int WIDTH = 240;
     private final int HEIGHT = 160;
 
-    private BufferedImage image;;
-
-    private int frames = 0;
-    private int maxFrames = 30;
-    private int currAnimation = 0;
+    private BufferedImage image;
     
-
-    public static void main(String[] args){
-
-        Game game = new Game();
-        game.start();
-
-    }
 
     public Game(){
         // Temos abaixo basicamente configuações padrão da tela, nesse método construtor.
@@ -103,14 +91,7 @@ public class Game extends Canvas implements Runnable{
     }
 
     public void tick(){
-        frames++;
-        if (frames > maxFrames){
-            frames = 0;
-            currAnimation++;
-            if (currAnimation > 1){
-                currAnimation = 0;
-            }
-        }
+
     }
 
     public void render(){
