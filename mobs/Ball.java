@@ -14,8 +14,8 @@ public class Ball {
     private int y;
     private int width;
     private int height;
-    private double velocityX = 1;
-    private double velocityY = 1;
+    private int velocityX = 1;
+    private int velocityY = 1;
     private Color color;
     
     public Ball(int x, int y, int width, int height, Color color, int screenWidth, int screenHeigth, int cornerUp, int cornerDown){
@@ -31,18 +31,18 @@ public class Ball {
     }
 
 
-    public double getVelocityX(){
+    public int getVelocityX(){
         return velocityX;
     }
-    public void setVelocityX(double newVelocityX){
+    public void setVelocityX(int newVelocityX){
         velocityX = newVelocityX;
     }
 
 
-    public double getVelocityY(){
+    public int getVelocityY(){
         return velocityY;
     }
-    public void setVelocityY(double newVelocityY){
+    public void setVelocityY(int newVelocityY){
         velocityY = newVelocityY;
     }
 
@@ -56,8 +56,8 @@ public class Ball {
 
 
     public void ballTick(){
-        x += (int) velocityX;
-        y += (int) velocityY;
+        x += velocityX;
+        y += velocityY;
 
         if (x > screenWidth - 1 - width | x < 0){
             velocityX *= -1;
