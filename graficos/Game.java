@@ -1,5 +1,7 @@
 package graficos;
 
+import mobs.*;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,8 +20,9 @@ public class Game extends Canvas implements Runnable{
     private final int SCALE = 3;
     private final int WIDTH = 240;
     private final int HEIGHT = 160;
-
     private BufferedImage image;
+
+    private Ball ball;
     
 
     public Game(){
@@ -27,6 +30,7 @@ public class Game extends Canvas implements Runnable{
         this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         initFrame();
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+        ball = new Ball(WIDTH / 2, HEIGHT / 2, 15, 15, Color.WHITE, WIDTH, HEIGHT);
     }
 
     public void initFrame(){
@@ -91,7 +95,30 @@ public class Game extends Canvas implements Runnable{
     }
 
     public void tick(){
+        //Ball tick code
+        ball.ballTick();
+        if (ball.getBouncingCount() > 4){
+            ball.setBouncingCount(0);
+            ball.setVelocityX(ball.getVelocityX() * 1.1);
+            ball.setVelocityY(ball.getVelocityY() * 1.1);
+        }
 
+        if (ball.getVelocityX()  >  3){
+            ball.setVelocityX(3.0);
+        } 
+        else if (ball.getVelocityX() < -3){
+            ball.setVelocityX(-3.0);
+        }
+
+        if (ball.getVelocityY()  >  3){
+            ball.setVelocityY(3.0);
+        } 
+        else if (ball.getVelocityY() < -3){
+            ball.setVelocityY(-3.0);
+        }
+        
+
+        //*******************/
     }
 
     public void render(){
@@ -108,6 +135,8 @@ public class Game extends Canvas implements Runnable{
         g.setFont(new Font("Arial", Font.BOLD, 20));
         g.setColor(Color.WHITE);
         g.drawString("Pong", 10, 20); // toda essas 3 linhas são para o String
+
+        ball.ballRender(g);
 
         g.dispose();
         g = bs.getDrawGraphics();

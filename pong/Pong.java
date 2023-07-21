@@ -1,6 +1,5 @@
 package pong;
 import graficos.*;
-import mobs.*;
 
 public class Pong {
     
