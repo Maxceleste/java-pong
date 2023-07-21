@@ -8,6 +8,8 @@ public class Ball {
     private int bouncingCount;
     private int screenWidth;
     private int screenHeigth;
+    private int cornerUp;
+    private int cornerDown;
     private int x;
     private int y;
     private int width;
@@ -16,7 +18,7 @@ public class Ball {
     private double velocityY = 1;
     private Color color;
     
-    public Ball(int x, int y, int width, int height, Color color, int screenWidth, int screenHeigth){
+    public Ball(int x, int y, int width, int height, Color color, int screenWidth, int screenHeigth, int cornerUp, int cornerDown){
         this.x = x;
         this.y = y;
         this.width = width;
@@ -24,6 +26,8 @@ public class Ball {
         this.color = color;
         this.screenWidth = screenWidth;
         this.screenHeigth = screenHeigth;
+        this.cornerUp = cornerUp;
+        this.cornerDown = cornerDown;
     }
 
 
@@ -59,7 +63,7 @@ public class Ball {
             velocityX *= -1;
             bouncingCount++;
         }
-        if (y > screenHeigth - 1 - height | y < 0){
+        if (y > screenHeigth - 1 - height - cornerDown | y < cornerUp){
             velocityY *= -1;
             bouncingCount++;
         }

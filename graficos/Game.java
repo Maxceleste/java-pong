@@ -19,7 +19,9 @@ public class Game extends Canvas implements Runnable{
     private boolean isRunning = false;
     private final int SCALE = 3;
     private final int WIDTH = 240;
-    private final int HEIGHT = 160;
+    private final int HEIGHT = 200;
+    private final int HEIGHTUPCORNER = 30;
+    private final int HEIGHTDOWNCORNER = 30;
     private BufferedImage image;
 
     private Ball ball;
@@ -30,7 +32,7 @@ public class Game extends Canvas implements Runnable{
         this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         initFrame();
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        ball = new Ball(WIDTH / 2, HEIGHT / 2, 15, 15, Color.WHITE, WIDTH, HEIGHT);
+        ball = new Ball(WIDTH / 2, HEIGHT / 2, 15, 15, Color.WHITE, WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER);
     }
 
     public void initFrame(){
@@ -132,9 +134,14 @@ public class Game extends Canvas implements Runnable{
         g.setColor(new Color(0,0,0)); // Valores RGB, cor atual: PRETO
         g.fillRect(0, 0, WIDTH, HEIGHT); // estabelecendo o fundo do cenário
 
-        g.setFont(new Font("Arial", Font.BOLD, 20));
+        g.setColor(new Color(255, 255, 255));
+        g.fillRect(0, HEIGHTUPCORNER - 5, WIDTH, 5);
+        g.fillRect(0, HEIGHT - HEIGHTDOWNCORNER, WIDTH, 5);
+
+
+        g.setFont(new Font("Arial", Font.BOLD, 15));
         g.setColor(Color.WHITE);
-        g.drawString("Pong", 10, 20); // toda essas 3 linhas são para o String
+        g.drawString("Pong", 10, 15); // toda essas 3 linhas são para o String
 
         ball.ballRender(g);
 
