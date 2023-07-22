@@ -7,12 +7,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable{
+public class Game extends Canvas implements Runnable, KeyListener{
 
     public static JFrame frame;
     private Thread thread;
@@ -23,8 +25,13 @@ public class Game extends Canvas implements Runnable{
     private final int HEIGHTUPCORNER = 30;
     private final int HEIGHTDOWNCORNER = 30;
     private BufferedImage image;
+    private boolean movingUp = false;
+    private boolean movingDown = false;
 
     private Ball ball;
+    private Player player;
+
+    
     
 
     public Game(){
@@ -33,6 +40,8 @@ public class Game extends Canvas implements Runnable{
         initFrame();
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         ball = new Ball(WIDTH / 2, HEIGHT / 2, 15, 15, Color.WHITE, WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER);
+        player = new Player(Color.GREEN, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, 0, 70, 10);
+        this.addKeyListener(this);
     }
 
     public void initFrame(){
@@ -108,6 +117,15 @@ public class Game extends Canvas implements Runnable{
         }
 
         //*******************/
+
+        //Player tick code
+
+        if (movingUp){
+            player.moveUp();
+        }
+        if (movingDown){
+            player.moveDown();
+        }
     }
 
     public void render(){
@@ -123,7 +141,7 @@ public class Game extends Canvas implements Runnable{
 
         g.setColor(new Color(255, 255, 255));
         g.fillRect(0, HEIGHTUPCORNER - 5, WIDTH, 5);
-        g.fillRect(0, HEIGHT - HEIGHTDOWNCORNER, WIDTH, 5);
+        g.fillRect(0, HEIGHT - HEIGHTDOWNCORNER, WIDTH, 5); // 3 linhas para as bordas
 
 
         g.setFont(new Font("Arial", Font.BOLD, 15));
@@ -131,10 +149,36 @@ public class Game extends Canvas implements Runnable{
         g.drawString("Pong", 10, 15); // toda essas 3 linhas são para o String
 
         ball.ballRender(g);
+        player.playerRender(g);
 
         g.dispose();
         g = bs.getDrawGraphics();
         g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null); // Após eu configurar acima, eu renderizo tudo pronto agora,
         bs.show();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // Arrumar depois
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_W){
+            movingUp = true;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_S){
+            movingDown = true;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_W){
+            movingUp = false;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_S){
+            movingDown = false;
+        }
     }
 }
