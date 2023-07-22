@@ -99,26 +99,13 @@ public class Game extends Canvas implements Runnable{
     public void tick(){
         //Ball tick code
         ball.ballTick();
-        if (ball.getBouncingCount() > 14){
-            ball.setBouncingCount(0);
-            ball.setVelocityX(ball.getVelocityX() + 1);
-            ball.setVelocityY(ball.getVelocityY() + 1);
+        if (ball.getVelocityX() < 4 & ball.getVelocityX() > -4){
+            if (ball.getBouncingCount() > 14){
+                ball.setBouncingCount(0);
+                ball.setVelocityX(ball.getVelocityX() * 2);
+                ball.setVelocityY(ball.getVelocityY() * 2);
+            }
         }
-
-        if (ball.getVelocityX()  >  3){
-            ball.setVelocityX(3);
-        } 
-        else if (ball.getVelocityX() < -3){
-            ball.setVelocityX(-3);
-        }
-
-        if (ball.getVelocityY()  >  3){
-            ball.setVelocityY(3);
-        } 
-        else if (ball.getVelocityY() < -3){
-            ball.setVelocityY(-3);
-        }
-        
 
         //*******************/
     }
