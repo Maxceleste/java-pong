@@ -31,6 +31,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
     private Ball ball;
     private Player player;
     private Enemy enemy;
+    private Score score;
 
     
     
@@ -43,6 +44,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
         ball = new Ball(WIDTH / 2, HEIGHT / 2, 15, 15, Color.WHITE, WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER);
         player = new Player(Color.GREEN, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, 0, 70, 10);
         enemy = new Enemy(Color.RED, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, WIDTH - 10, 70, 10 );
+        score = new Score(25, "Arial", WIDTH, 22, Color.WHITE);
         this.addKeyListener(this);
     }
 
@@ -127,6 +129,20 @@ public class Game extends Canvas implements Runnable, KeyListener{
         //Enemy tick code
 
         enemy.enemyTick(ball);
+
+        /*******************/
+
+        // Score tick code
+
+        if (ball.getX() + ball.getWidth() < 0){
+            score.enemyScoreUp();
+            ball.resetBall();
+        }
+
+        if (ball.getX() > WIDTH){
+            score.playerScoreUp();
+            ball.resetBall();
+        }
     }
 
     public void render(){
@@ -142,7 +158,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
         g.setColor(new Color(255, 255, 255));
         g.fillRect(0, HEIGHTUPCORNER - 5, WIDTH, 5);
-        g.fillRect(0, HEIGHT - HEIGHTDOWNCORNER, WIDTH, 5); // 3 linhas para as bordas
+        g.fillRect(0, HEIGHT - HEIGHTDOWNCORNER, WIDTH, 5); // 3 linhas para as bordas  
 
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.setColor(Color.WHITE);
@@ -151,6 +167,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
         ball.ballRender(g);
         player.playerRender(g);
         enemy.enemyRender(g);
+        score.scoreRender(g);
 
         g.dispose();
         g = bs.getDrawGraphics();

@@ -17,6 +17,8 @@ public class Ball {
     private int velocityX = 1;
     private int velocityY = 1;
     private Color color;
+    private int originalX;
+    private int originalY;
 
 
     Random random;
@@ -32,6 +34,8 @@ public class Ball {
         this.cornerUp = cornerUp;
         this.cornerDown = cornerDown;
         random = new Random();
+        originalX = x;
+        originalY = y;
     }
 
 
@@ -57,6 +61,10 @@ public class Ball {
         return y;
     }
 
+    public int getWidth(){
+        return width;
+    }
+
     public void randomVelocity(){
         int newVelocityX = random.nextInt(1, 5);
         int newVelocityY = random.nextInt(1, 5);
@@ -67,6 +75,13 @@ public class Ball {
         if (velocityY > 0) velocityY = newVelocityY;
         else velocityY = -newVelocityY;
 
+    }
+
+    public void resetBall(){
+        x = originalX;
+        y = originalY;
+        velocityX = 1;
+        velocityY = 1;
     }
 
 
@@ -81,7 +96,7 @@ public class Ball {
         boolean hitEnemy = (centerY > enemy.getY() & centerY < enemy.getY() + enemy.getHeigth()) & x + width > enemy.getX();
 
 
-        if (hitEnemy & x < screenWidth){
+        if (hitEnemy & x + width < screenWidth){
             velocityX *= -1;
             randomVelocity();
             x = enemy.getX() - width;

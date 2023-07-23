@@ -13,6 +13,7 @@ public class Enemy {
     private int y;
     private int width;
     private int height;
+    private int speed = 1;
     
 
     public Enemy(Color color, int screenHeigth, int cornerUp, int cornerDown, int x, int y, int width){
@@ -56,10 +57,10 @@ public class Enemy {
 
     public void enemyTick(Ball ball){
         if (ball.getY() < y + height / 2){
-            moveUp(1); 
+            moveUp(speed); 
         } 
         else if(ball.getY() > y + height / 2){
-            moveDown(1); 
+            moveDown(speed); 
         }
     }
 
