@@ -1,7 +1,6 @@
 package graficos;
 
 import mobs.*;
-
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -107,15 +106,8 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
     public void tick(){
         //Ball tick code
-        ball.ballTick();
-        if (ball.getVelocityX() < 4 & ball.getVelocityX() > -4){
-            if (ball.getBouncingCount() > 14){
-                ball.setBouncingCount(0);
-                ball.setVelocityX(ball.getVelocityX() * 2);
-                ball.setVelocityY(ball.getVelocityY() * 2);
-            }
-        }
-
+        ball.ballTick(player);
+       
         //*******************/
 
         //Player tick code
@@ -147,6 +139,10 @@ public class Game extends Canvas implements Runnable, KeyListener{
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.setColor(Color.WHITE);
         g.drawString("Pong", 10, 15); // toda essas 3 linhas são para o String
+
+        g.setFont(new Font("Arial", Font.BOLD, 15));
+        g.setColor(Color.WHITE);
+        g.drawString("Bouncing: " + ball.getBouncingCount(), 10, HEIGHT - HEIGHTDOWNCORNER + 17); // toda essas 3 linhas são para o String
 
         ball.ballRender(g);
         player.playerRender(g);

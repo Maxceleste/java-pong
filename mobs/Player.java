@@ -38,12 +38,15 @@ public class Player {
     public int getY(){
         return y;
     }
+    public int getX(){
+        return x;
+    }
 
     public void moveUp(){
-        if (y > cornerUp) y--;
+        if (y > cornerUp) y -= 2;
     }
     public void moveDown(){
-        if (y + height < screenHeigth - cornerDown) y++;
+        if (y + height < screenHeigth - cornerDown) y += 2;
     }
 
     public void playerRender(Graphics g){
