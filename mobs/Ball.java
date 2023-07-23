@@ -6,7 +6,6 @@ import java.util.Random;
 
 public class Ball {
 
-    private int bouncingCount;
     private int screenWidth;
     private int screenHeigth;
     private int cornerUp;
@@ -51,13 +50,6 @@ public class Ball {
         velocityY = newVelocityY;
     }
 
-    public int getBouncingCount(){
-        return bouncingCount;
-    }
-    public void setBouncingCount(int newBouncingCount){
-        bouncingCount = newBouncingCount;
-    }
-
     public void randomVelocity(){
         int newVelocityX = random.nextInt(1, 5);
         int newVelocityY = random.nextInt(1, 5);
@@ -82,25 +74,21 @@ public class Ball {
 
         if (x > screenWidth - 1 - width){
             velocityX *= -1;
-            bouncingCount++;
             randomVelocity();
             x = screenWidth - width - 1;
         }
         if (hitPlayer & x > 0){
             velocityX *= -1;
-            bouncingCount++;
             randomVelocity();
             x = player.getX() + player.getWidth();
         }
 
         if (y > screenHeigth - 1 - height - cornerDown){
             velocityY *= -1;
-            bouncingCount++;
             y = screenHeigth - height - cornerDown - 1;
         }
         if (y < cornerUp){
             velocityY *= -1;
-            bouncingCount++;
             y = cornerUp;
         }
 

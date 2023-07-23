@@ -26,6 +26,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
     private BufferedImage image;
     private boolean movingUp = false;
     private boolean movingDown = false;
+    private String fpsCount = "FPS: 0";
 
     private Ball ball;
     private Player player;
@@ -80,7 +81,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
             }
             //Exibir FPS no terminal
             if (System.currentTimeMillis() - timer >= 1000){
-                System.out.println("FPS: " + frames);
+                fpsCount = "FPS: " + frames;
                 frames = 0;
                 timer += 1000;
             }
@@ -142,7 +143,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.setColor(Color.WHITE);
-        g.drawString("Bouncing: " + ball.getBouncingCount(), 10, HEIGHT - HEIGHTDOWNCORNER + 17); // toda essas 3 linhas são para o String
+        g.drawString(fpsCount, 10, HEIGHT - HEIGHTDOWNCORNER + 17); // toda essas 3 linhas são para o String
 
         ball.ballRender(g);
         player.playerRender(g);
