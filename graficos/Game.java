@@ -19,7 +19,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
     private Thread thread;
     private boolean isRunning = false;
     private final int SCALE = 3;
-    private final int WIDTH = 240;
+    private final int WIDTH = 300;
     private final int HEIGHT = 200;
     private final int HEIGHTUPCORNER = 30;
     private final int HEIGHTDOWNCORNER = 30;
@@ -32,6 +32,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
     private Player player;
     private Enemy enemy;
     private Score score;
+    private MidLine midLine;
 
     
     
@@ -45,6 +46,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
         player = new Player(Color.GREEN, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, 0, 70, 10);
         enemy = new Enemy(Color.RED, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, WIDTH - 10, 70, 10 );
         score = new Score(25, "Arial", WIDTH, 22, Color.WHITE);
+        midLine = new MidLine(WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, Color.WHITE);
         this.addKeyListener(this);
     }
 
@@ -168,6 +170,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
         player.playerRender(g);
         enemy.enemyRender(g);
         score.scoreRender(g);
+        midLine.MidLineRender(g);
 
         g.dispose();
         g = bs.getDrawGraphics();

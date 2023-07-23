@@ -19,7 +19,7 @@ public class Score {
         this.fontSize = fontSize;
         this.font = font;
         this.screenWidth = screenWidth;
-        x = this.screenWidth / 2 - 26;
+        x = this.screenWidth / 2 - 27;
         this.y = y;
         this.color = color;
     }
