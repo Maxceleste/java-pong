@@ -50,6 +50,13 @@ public class Ball {
         velocityY = newVelocityY;
     }
 
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
+
     public void randomVelocity(){
         int newVelocityX = random.nextInt(1, 5);
         int newVelocityY = random.nextInt(1, 5);
@@ -64,18 +71,20 @@ public class Ball {
 
 
 
-    public void ballTick(Player player){
+    public void ballTick(Player player, Enemy enemy){
         x += velocityX;
         y += velocityY;
 
         int centerY = y + height/2;
 
         boolean hitPlayer = (centerY > player.getY() & centerY  < player.getY() + player.getHeigth()) & x < player.getX() + player.getWidth();
+        boolean hitEnemy = (centerY > enemy.getY() & centerY < enemy.getY() + enemy.getHeigth()) & x + width > enemy.getX();
 
-        if (x > screenWidth - 1 - width){
+
+        if (hitEnemy & x < screenWidth){
             velocityX *= -1;
             randomVelocity();
-            x = screenWidth - width - 1;
+            x = enemy.getX() - width;
         }
         if (hitPlayer & x > 0){
             velocityX *= -1;

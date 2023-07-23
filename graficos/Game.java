@@ -30,6 +30,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
     private Ball ball;
     private Player player;
+    private Enemy enemy;
 
     
     
@@ -41,6 +42,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         ball = new Ball(WIDTH / 2, HEIGHT / 2, 15, 15, Color.WHITE, WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER);
         player = new Player(Color.GREEN, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, 0, 70, 10);
+        enemy = new Enemy(Color.RED, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, WIDTH - 10, 70, 10 );
         this.addKeyListener(this);
     }
 
@@ -107,7 +109,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
     public void tick(){
         //Ball tick code
-        ball.ballTick(player);
+        ball.ballTick(player, enemy);
        
         //*******************/
 
@@ -119,6 +121,12 @@ public class Game extends Canvas implements Runnable, KeyListener{
         if (movingDown){
             player.moveDown();
         }
+
+        //******************/
+
+        //Enemy tick code
+
+        enemy.enemyTick(ball);
     }
 
     public void render(){
@@ -136,17 +144,13 @@ public class Game extends Canvas implements Runnable, KeyListener{
         g.fillRect(0, HEIGHTUPCORNER - 5, WIDTH, 5);
         g.fillRect(0, HEIGHT - HEIGHTDOWNCORNER, WIDTH, 5); // 3 linhas para as bordas
 
-
-        g.setFont(new Font("Arial", Font.BOLD, 15));
-        g.setColor(Color.WHITE);
-        g.drawString("Pong", 10, 15); // toda essas 3 linhas são para o String
-
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.setColor(Color.WHITE);
         g.drawString(fpsCount, 10, HEIGHT - HEIGHTDOWNCORNER + 17); // toda essas 3 linhas são para o String
 
         ball.ballRender(g);
         player.playerRender(g);
+        enemy.enemyRender(g);
 
         g.dispose();
         g = bs.getDrawGraphics();
