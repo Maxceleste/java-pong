@@ -1,10 +1,9 @@
 package graficos;
 
-import mobs.*;
+import gameScreens.SoloMode;
+
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -24,29 +23,16 @@ public class Game extends Canvas implements Runnable, KeyListener{
     private final int HEIGHTUPCORNER = 30;
     private final int HEIGHTDOWNCORNER = 30;
     private BufferedImage image;
-    private boolean movingUp = false;
-    private boolean movingDown = false;
-    private String fpsCount = "FPS: 0";
+    private String fpsCount = "FPS: 0";    
 
-    private Ball ball;
-    private Player player;
-    private Enemy enemy;
-    private Score score;
-    private MidLine midLine;
-
-    
-    
+    private SoloMode soloMode;
 
     public Game(){
         // Temos abaixo basicamente configuações padrão da tela, nesse método construtor.
         this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         initFrame();
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        ball = new Ball(WIDTH / 2, HEIGHT / 2, 15, 15, Color.WHITE, WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER);
-        player = new Player(Color.GREEN, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, 0, 70, 10);
-        enemy = new Enemy(Color.RED, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, WIDTH - 10, 70, 10 );
-        score = new Score(25, "Arial", WIDTH, 22, Color.WHITE);
-        midLine = new MidLine(WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER, Color.WHITE);
+        soloMode = new SoloMode(WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER);
         this.addKeyListener(this);
     }
 
@@ -112,39 +98,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
     }
 
     public void tick(){
-        //Ball tick code
-        ball.ballTick(player, enemy);
-       
-        //*******************/
-
-        //Player tick code
-
-        if (movingUp){
-            player.moveUp();
-        }
-        if (movingDown){
-            player.moveDown();
-        }
-
-        //******************/
-
-        //Enemy tick code
-
-        enemy.enemyTick(ball);
-
-        /*******************/
-
-        // Score tick code
-
-        if (ball.getX() + ball.getWidth() < 0){
-            score.enemyScoreUp();
-            ball.resetBall();
-        }
-
-        if (ball.getX() > WIDTH){
-            score.playerScoreUp();
-            ball.resetBall();
-        }
+        soloMode.soloModeTick();
     }
 
     public void render(){
@@ -155,22 +109,8 @@ public class Game extends Canvas implements Runnable, KeyListener{
         }
 
         Graphics g = image.getGraphics();
-        g.setColor(new Color(0,0,0)); // Valores RGB, cor atual: PRETO
-        g.fillRect(0, 0, WIDTH, HEIGHT); // estabelecendo o fundo do cenário
-
-        g.setColor(new Color(255, 255, 255));
-        g.fillRect(0, HEIGHTUPCORNER - 5, WIDTH, 5);
-        g.fillRect(0, HEIGHT - HEIGHTDOWNCORNER, WIDTH, 5); // 3 linhas para as bordas  
-
-        g.setFont(new Font("Arial", Font.BOLD, 15));
-        g.setColor(Color.WHITE);
-        g.drawString(fpsCount, 10, HEIGHT - HEIGHTDOWNCORNER + 17); // toda essas 3 linhas são para o String
-
-        ball.ballRender(g);
-        player.playerRender(g);
-        enemy.enemyRender(g);
-        score.scoreRender(g);
-        midLine.MidLineRender(g);
+        
+        soloMode.soloModeRender(g, fpsCount);
 
         g.dispose();
         g = bs.getDrawGraphics();
@@ -185,21 +125,11 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_W){
-            movingUp = true;
-        }
-        if(e.getKeyCode() == KeyEvent.VK_S){
-            movingDown = true;
-        }
+        soloMode.PlayerMovementPress(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_W){
-            movingUp = false;
-        }
-        if(e.getKeyCode() == KeyEvent.VK_S){
-            movingDown = false;
-        }
+        soloMode.PlayerMovementRelease(e);
     }
 }
