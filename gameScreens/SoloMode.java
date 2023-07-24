@@ -69,15 +69,8 @@ public class SoloMode {
 
         // Score tick code
 
-        if (ball.getX() + ball.getWidth() < 0){
-            score.enemyScoreUp();
-            ball.resetBall();
-        }
-
-        if (ball.getX() > screenWidth){
-            score.playerScoreUp();
-            ball.resetBall();
-        }
+        score.scoreTick(ball, this);
+        if (score.getGameReset()) resetGame();
     }
 
     public void soloModeRender(Graphics g, String fpsCount){

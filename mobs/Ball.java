@@ -66,7 +66,7 @@ public class Ball {
     }
 
     public void randomVelocity(){
-        int newVelocityX = random.nextInt(1, 5);
+        int newVelocityX = random.nextInt(2, 5);
         int newVelocityY = random.nextInt(1, 5);
 
         if (velocityX > 0) velocityX = newVelocityX;
