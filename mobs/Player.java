@@ -26,7 +26,7 @@ public class Player {
         this.width = width;
         initialY = y;
 
-        this.height = screenHeigth / 4;
+        this.height = 50;
     }
 
     public int getWidth(){

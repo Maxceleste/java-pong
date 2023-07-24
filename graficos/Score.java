@@ -43,6 +43,7 @@ public class Score {
     public void resetScore(){
         playerScore = 0;
         enemyScore = 0;
+        timer = 0;
         gameEnd = false;
         gameReset = false;
         playerWin = false;
@@ -101,14 +102,14 @@ public class Score {
             ball.resetBall();
         }
 
-        if (playerScore > 1){
+        if (playerScore > 4){
             playerWin = true;
             gameEnd = true;
             ball.resetBall();
             ball.setVelocityX(0);
             ball.setVelocityY(0);
         }
-        if (enemyScore > 1){
+        if (enemyScore > 4){
             enemyWin = true;
             gameEnd = true;
             ball.resetBall();

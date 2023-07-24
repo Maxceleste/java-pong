@@ -27,7 +27,7 @@ public class Enemy {
         initialY = y;
         this.width = width;
 
-        this.height = screenHeigth / 4;
+        this.height = 50;
     }
 
     public int getWidth(){

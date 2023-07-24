@@ -90,6 +90,7 @@ public class Ball {
         x += velocityX;
         y += velocityY;
 
+
         int centerY = y + height/2;
 
         boolean hitPlayer = (centerY > player.getY() & centerY  < player.getY() + player.getHeigth()) & x < player.getX() + player.getWidth();

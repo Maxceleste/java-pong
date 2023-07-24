@@ -114,7 +114,7 @@ public class SoloMode {
     public void resetGame(){
         player.resetPlayer();
         score.resetScore();
-        ball.resetBall();
         enemy.resetEnemy();
+        ball.resetBall();
     }
 }
