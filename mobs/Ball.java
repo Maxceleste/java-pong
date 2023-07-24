@@ -118,6 +118,38 @@ public class Ball {
 
     }
 
+    public void ballTick(Player player1, Player player2){
+        x += velocityX;
+        y += velocityY;
+
+        int centerY = y + height/2;
+
+        boolean hitPlayer1 = (centerY > player1.getY() & centerY  < player1.getY() + player1.getHeigth()) & x < player1.getX() + player1.getWidth();
+        boolean hitPlayer2 = (centerY > player2.getY() & centerY < player2.getY() + player2.getHeigth()) & x + width > player2.getX();
+
+
+        if (hitPlayer2 & x + width < screenWidth){
+            velocityX *= -1;
+            randomVelocity();
+            x = player2.getX() - width;
+        }
+        if (hitPlayer1 & x > 0){
+            velocityX *= -1;
+            randomVelocity();
+            x = player1.getX() + player1.getWidth();
+        }
+
+        if (y > screenHeigth - 1 - height - cornerDown){
+            velocityY *= -1;
+            y = screenHeigth - height - cornerDown - 1;
+        }
+        if (y < cornerUp){
+            velocityY *= -1;
+            y = cornerUp;
+        }
+
+    }
+
     public void ballRender(Graphics g){
         g.setColor(color);
         g.fillOval( x, y, width, height);

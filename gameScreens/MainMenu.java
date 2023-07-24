@@ -88,6 +88,7 @@ public class MainMenu {
         }
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
             if (options == 0) actualScreen = 1;
+            if (options == 1) actualScreen = 2;
         }
     }
 }

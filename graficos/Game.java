@@ -1,6 +1,7 @@
 package graficos;
 
 import gameScreens.MainMenu;
+import gameScreens.MultiMode;
 import gameScreens.SoloMode;
 
 import java.awt.Canvas;
@@ -26,11 +27,12 @@ public class Game extends Canvas implements Runnable, KeyListener{
     private BufferedImage image;
     private String fpsCount = "FPS: 0";
 
-    private String[] screens = {"mainMenu", "soloMode"};
+    private String[] screens = {"mainMenu", "soloMode", "multiMode"};
     private int actualScreen = 0;
 
     private MainMenu mainMenu;
     private SoloMode soloMode;
+    private MultiMode multiMode;
 
     public Game(){
         // Temos abaixo basicamente configuações padrão da tela, nesse método construtor.
@@ -38,6 +40,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
         initFrame();
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         soloMode = new SoloMode(WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER);
+        multiMode = new MultiMode(WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER);
         mainMenu = new MainMenu(WIDTH, HEIGHT, this);
         this.addKeyListener(this);
     }
@@ -110,7 +113,10 @@ public class Game extends Canvas implements Runnable, KeyListener{
         }
         else if (screens[actualScreen].equals("soloMode")){
             soloMode.soloModeTick();
-        }   
+        }
+        else if (screens[actualScreen].equals("multiMode")){
+            multiMode.multiModeTick();
+        }
     }
 
     public void render(){
@@ -127,7 +133,10 @@ public class Game extends Canvas implements Runnable, KeyListener{
         }
         else if (screens[actualScreen].equals("soloMode")){
             soloMode.soloModeRender(g, fpsCount);
-        }  
+        }
+        else if (screens[actualScreen].equals("multiMode")){
+            multiMode.multiModeRender(g, fpsCount);
+        }
 
         g.dispose();
         g = bs.getDrawGraphics();
@@ -146,19 +155,21 @@ public class Game extends Canvas implements Runnable, KeyListener{
         if(screens[actualScreen].equals("mainMenu")){
             mainMenu.menuNavigatePressed(e);
         }
-        if (screens[actualScreen].equals("soloMode")){
+        else if (screens[actualScreen].equals("soloMode")){
             soloMode.playerMovementPress(e);
-        }  
+        }
+        else if (screens[actualScreen].equals("multiMode")){
+            multiMode.playerMovementPress(e);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (screens[actualScreen].equals("soloMode")){
             soloMode.playerMovementRelease(e);
-        }  
-    }
-
-    public void setActualScreen(int newActualScreen){
-        actualScreen = newActualScreen;
+        }
+        else if (screens[actualScreen].equals("multiMode")){
+            multiMode.playerMovementRelease(e);
+        }
     }
 }
