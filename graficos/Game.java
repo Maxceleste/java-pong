@@ -1,5 +1,6 @@
 package graficos;
 
+import gameScreens.MainMenu;
 import gameScreens.SoloMode;
 
 import java.awt.Canvas;
@@ -23,8 +24,12 @@ public class Game extends Canvas implements Runnable, KeyListener{
     private final int HEIGHTUPCORNER = 30;
     private final int HEIGHTDOWNCORNER = 30;
     private BufferedImage image;
-    private String fpsCount = "FPS: 0";    
+    private String fpsCount = "FPS: 0";
 
+    private String[] screens = {"mainMenu", "soloMode"};
+    private int actualScreen = 0;
+
+    private MainMenu mainMenu;
     private SoloMode soloMode;
 
     public Game(){
@@ -33,6 +38,7 @@ public class Game extends Canvas implements Runnable, KeyListener{
         initFrame();
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         soloMode = new SoloMode(WIDTH, HEIGHT, HEIGHTUPCORNER, HEIGHTDOWNCORNER);
+        mainMenu = new MainMenu(WIDTH, HEIGHT, this);
         this.addKeyListener(this);
     }
 
@@ -98,7 +104,13 @@ public class Game extends Canvas implements Runnable, KeyListener{
     }
 
     public void tick(){
-        soloMode.soloModeTick();
+        if(screens[actualScreen].equals("mainMenu")){
+            mainMenu.menuTick();
+            actualScreen = mainMenu.getActualScreen();
+        }
+        else if (screens[actualScreen].equals("soloMode")){
+            soloMode.soloModeTick();
+        }   
     }
 
     public void render(){
@@ -109,8 +121,13 @@ public class Game extends Canvas implements Runnable, KeyListener{
         }
 
         Graphics g = image.getGraphics();
-        
-        soloMode.soloModeRender(g, fpsCount);
+
+        if(screens[actualScreen].equals("mainMenu")){
+            mainMenu.menuRender(g);
+        }
+        else if (screens[actualScreen].equals("soloMode")){
+            soloMode.soloModeRender(g, fpsCount);
+        }  
 
         g.dispose();
         g = bs.getDrawGraphics();
@@ -120,16 +137,28 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // Arrumar depois
+        //
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        soloMode.PlayerMovementPress(e);
+    
+        if(screens[actualScreen].equals("mainMenu")){
+            mainMenu.menuNavigatePressed(e);
+        }
+        if (screens[actualScreen].equals("soloMode")){
+            soloMode.playerMovementPress(e);
+        }  
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        soloMode.PlayerMovementRelease(e);
+        if (screens[actualScreen].equals("soloMode")){
+            soloMode.playerMovementRelease(e);
+        }  
+    }
+
+    public void setActualScreen(int newActualScreen){
+        actualScreen = newActualScreen;
     }
 }

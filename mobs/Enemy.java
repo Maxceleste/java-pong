@@ -11,6 +11,7 @@ public class Enemy {
     private int cornerDown;
     private int x;
     private int y;
+    private int initialY;
     private int width;
     private int height;
     private int speed = 1;
@@ -23,6 +24,7 @@ public class Enemy {
         this.cornerDown = cornerDown;
         this.x = x;
         this.y = y;
+        initialY = y;
         this.width = width;
 
         this.height = screenHeigth / 4;
@@ -41,6 +43,10 @@ public class Enemy {
     }
     public int getX(){
         return x;
+    }
+
+    public void resetEnemy(){
+        y = initialY;
     }
 
     public void moveUp(int speed){

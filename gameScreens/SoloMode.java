@@ -100,7 +100,7 @@ public class SoloMode {
 
     }
 
-    public void PlayerMovementPress(KeyEvent e){
+    public void playerMovementPress(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_W){
             movingUp = true;
         }
@@ -109,12 +109,19 @@ public class SoloMode {
         }
     }
 
-    public void PlayerMovementRelease(KeyEvent e){
+    public void playerMovementRelease(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_W){
             movingUp = false;
         }
         if(e.getKeyCode() == KeyEvent.VK_S){
             movingDown = false;
         }
+    }
+
+    public void resetGame(){
+        player.resetPlayer();
+        score.resetScore();
+        ball.resetBall();
+        enemy.resetEnemy();
     }
 }

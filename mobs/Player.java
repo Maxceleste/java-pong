@@ -11,6 +11,7 @@ public class Player {
     private int cornerDown;
     private int x;
     private int y;
+    private int initialY;
     private int width;
     private int height;
     
@@ -23,6 +24,7 @@ public class Player {
         this.x = x;
         this.y = y;
         this.width = width;
+        initialY = y;
 
         this.height = screenHeigth / 4;
     }
@@ -40,6 +42,10 @@ public class Player {
     }
     public int getX(){
         return x;
+    }
+
+    public void resetPlayer(){
+        y = initialY;
     }
 
     public void moveUp(){
