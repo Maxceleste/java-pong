@@ -16,7 +16,8 @@ import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable, KeyListener{
 
-    public static JFrame frame;
+    private static final long serialVersionUID = 1L;
+	public static JFrame frame;
     private Thread thread;
     private boolean isRunning = false;
     private final int SCALE = 3;
