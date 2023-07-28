@@ -24,6 +24,8 @@ public class Score {
     private boolean gameReset = false;
     private int timer = 0;
 
+    private Sound sound;
+
     
     public Score(int fontSize, String font, int screenWidth, int y, Color color){
         this.fontSize = fontSize;
@@ -32,13 +34,16 @@ public class Score {
         x = this.screenWidth / 2 - 27;
         this.y = y;
         this.color = color;
+        sound = new Sound("gamePoint.wav");
     }
 
     public void playerScoreUp(){
         playerScore++;
+        sound.playSound();
     }
     public void enemyScoreUp(){
         enemyScore++;
+        sound.playSound();
     }
     public void resetScore(){
         playerScore = 0;

@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import graficos.Game;
+import graficos.Sound;
 
 public class MainMenu {
 
@@ -14,6 +15,8 @@ public class MainMenu {
     private int options = 0; // 0 == singleplayer, 1 == multiplayer
     private int actualScreen = 0;
     Game game;
+    Sound soundSwitch;
+    Sound soundStart;
 
 
 
@@ -21,6 +24,8 @@ public class MainMenu {
         this.screenWidth = screenWidth;
         this.screenHeigth = screenHeigth;
         this.game = game;
+        soundSwitch = new Sound("wallHit.wav");
+        soundStart = new Sound("gamePoint.wav");
     }
     
     public void menuRender(Graphics g){
@@ -82,13 +87,16 @@ public class MainMenu {
     public void menuNavigatePressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_W & options > 0){
             options--;
+            soundSwitch.playSound();
         }
         if(e.getKeyCode() == KeyEvent.VK_S & options < 1){
             options++;
+            soundSwitch.playSound();
         }
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
             if (options == 0) actualScreen = 1;
             if (options == 1) actualScreen = 2;
+            soundStart.playSound();
         }
     }
 }

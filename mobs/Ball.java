@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
+import graficos.Sound;
+
 public class Ball {
 
     private int screenWidth;
@@ -22,6 +24,8 @@ public class Ball {
 
 
     Random random;
+    Sound soundPlayer;
+    Sound soundWall;
     
     public Ball(int x, int y, int width, int height, Color color, int screenWidth, int screenHeigth, int cornerUp, int cornerDown){
         this.x = x;
@@ -36,6 +40,9 @@ public class Ball {
         random = new Random();
         originalX = x;
         originalY = y;
+
+        soundPlayer = new Sound("playerHit.wav");
+        soundWall = new Sound("wallHit.wav");
     }
 
 
@@ -101,20 +108,24 @@ public class Ball {
             velocityX *= -1;
             randomVelocity();
             x = enemy.getX() - width;
+            soundPlayer.playSound();
         }
         if (hitPlayer & x > 0){
             velocityX *= -1;
             randomVelocity();
             x = player.getX() + player.getWidth();
+            soundPlayer.playSound();
         }
 
         if (y > screenHeigth - 1 - height - cornerDown){
             velocityY *= -1;
             y = screenHeigth - height - cornerDown - 1;
+            soundWall.playSound();
         }
         if (y < cornerUp){
             velocityY *= -1;
             y = cornerUp;
+            soundWall.playSound();
         }
 
     }
@@ -133,20 +144,24 @@ public class Ball {
             velocityX *= -1;
             randomVelocity();
             x = player2.getX() - width;
+            soundPlayer.playSound();
         }
         if (hitPlayer1 & x > 0){
             velocityX *= -1;
             randomVelocity();
             x = player1.getX() + player1.getWidth();
+            soundPlayer.playSound();
         }
 
         if (y > screenHeigth - 1 - height - cornerDown){
             velocityY *= -1;
             y = screenHeigth - height - cornerDown - 1;
+            soundWall.playSound();
         }
         if (y < cornerUp){
             velocityY *= -1;
             y = cornerUp;
+            soundWall.playSound();
         }
 
     }

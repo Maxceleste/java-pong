@@ -40,8 +40,6 @@ public class SoloMode {
         enemy = new Enemy(Color.RED, screenHeigth, cornerUp, cornerDown, screenWidth - 10, 70, 10 );
         score = new Score(25, "Arial", screenWidth, 22, Color.WHITE);
         midLine = new MidLine(screenWidth, screenHeigth, cornerUp, cornerDown, Color.WHITE);
-        
-
     }
     
     public void soloModeTick(){
